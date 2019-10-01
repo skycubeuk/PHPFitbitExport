@@ -31,6 +31,7 @@ PHP Fitbit Export is a quick project based on the [PHPMoves](https://github.com/
 * Once you have the token.json the webserver is no longer needed.
 * Edit the config.php file in the root directory of this project adding your Client ID, Client Secret, callback URL and the date you want to start the backup. 
 * Run backup.php via the command line your files will be exported to the backup folder. Fitbit allows 150 API calls per hour; there are 11 calls per day of data, a full year worth of data will take just over 26 hours 46 min to back up.
+* If the export fails for any reason, check the log file for the date of the last file written, update the config to start at that point and run again. 
 
 
 ## Contributing
