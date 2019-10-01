@@ -41,6 +41,8 @@ function get_data($df)
         $fn = $aa . "_" . $df . ".json";
 
         while (!$done) {
+            $t = json_decode(file_get_contents("token.json"), true);
+            $m->set_tokens($t['access_token'], $t['refresh_token']);
             $d2 = $m->get($p);
             $done = ratecheck($m->headers, $m->last_http);
             file_put_contents("./backup/" . $fn, json_encode($d2, JSON_PRETTY_PRINT));
@@ -61,9 +63,9 @@ function ratecheck($h, $r)
             $m->set_tokens($t['access_token'], $t['refresh_token']);
             $t2 = $m->refresh();
             file_put_contents("token.json", json_encode($t2));
+            sleep(10);
             logs("Token Expired refreshing auth token. Wating 10 sec.");
             return false;
-            sleep(10);
         }else{
             logs("Sleeping for " . ($resert + 60) . " Sec at rate limit. Responce Code:" . $r . " Requests remaining:" . $cur);
             sleep($resert + 60);
